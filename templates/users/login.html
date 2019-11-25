@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block page_name %} LOGIN {% endblock page_name %}
+
+{% block search-bar %}{% endblock search-bar %}
+
+{% block content %}
+  <div class="lg:w-1/3 md:w-11/12 p-6 border border-gray-300 container mx-auto flex flex-col items-center">
+    {% include "partials/socialLogin.html" %}
+    <form class="w-full mt-10 flex flex-col items-center" method="post" action="{% url "users:login" %}">
+      {% csrf_token %}
+      {{form.email}}
+      {% if form.email.errors %}
+        {% for error in form.email.errors %}
+        <div id="error_messages">
+            <span>{{error}}</span>
+        </div>
+        {% endfor %}
+      {% endif %}
+      {{form.password}}
+      {% if form.password.errors %}
+        {% for error in form.password.errors %}
+        <div id="error_messages">
+            <span>{{error}}</span>
+        </div>
+        {% endfor %}
+      {% endif %}
+      <button class="ani hover:bg-red-700 text-center mb-3 btn-custom text-white bg-red-500">Login</button>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{
+  "git.ignoreLimitWarning": true,
+  "python.pythonPath": "C:\\Users\\exit2\\.virtualenvs\\python_airbnb_clone-52bLAMB4\\Scripts\\python.exe",
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true,
+  "python.formatting.autopep8Args": [
+    "--max-line-length",
+    "120",
+    "--experimental"
+  ],
+  "python.linting.flake8Args": ["--max-line-length=92"],
+  "cornflakes.linter.executablePath": "path/to/venvs/myvenv/bin/flake8",
+  "python.linting.flake8Enabled": true,
+  "python.formatting.provider": "black",
+  "workbench.colorTheme": "Ayu Mirage Bordered",
+  "editor.formatOnSave": true
+}

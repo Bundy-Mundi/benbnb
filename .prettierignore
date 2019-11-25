@@ -1,0 +1,8 @@
+/node_modules/
+/public/
+/vendor/
+/tmp/
+
+# ignore stylesheets for now as this clashes with our linter
+
+*.html

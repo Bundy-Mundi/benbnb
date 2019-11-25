@@ -1,0 +1,9 @@
+<ul class="flex items-center text-sm font-normal h-full">
+{% if user.is_authenticated %}
+  <li class="nav_animation nav_link hover:border-gray-700"><a class=" " href="{% url "users:logout" %}">LOGOUT</a></li>
+{% else %}
+  <li class="nav_animation nav_link hover:border-gray-700"><a class="" href="{% url "users:login" %}">LOGIN</a></li>
+  <li class="nav_animation nav_link hover:border-gray-700"><a class="" href="{% url "users:signup" %}">SIGN UP</a></li>
+{% endif %}
+</ul>
+

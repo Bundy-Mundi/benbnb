@@ -1,0 +1,32 @@
+{% extends "base.html" %} 
+{% load static %}
+
+{% block page_name %} HOME {%endblock page_name %} 
+
+{% block content %}
+<div class="flex flex-col items-center w-full">
+  <div class="h-25vh w-11/12 xl:h-75vh xl:w-11/12 lg:h-75vh lg:w-11/12 md:h-50vh md:w-4/5 sm:h-25vh sm:w-2/3 rounded-xl mb-20 bg-cover bg-bottom" style="background-image: url(https://images.unsplash.com/photo-1517154421773-0529f29ea451?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format);"></div>
+  <div class="flex flex-wrap lg:w-11/12 md:w-4/5 sm:w-2/3">
+    {% for room in rooms %}
+      {% include "partials/room_card.html" with room=room %}
+    {% endfor %}
+  </div>
+</div>
+<div class="container mx-auto">
+  <span class="-mx-10 text-sm">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">PREV</a>
+    {% endif %} Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">NEXT</a>
+    {% endif %}
+  </span>
+</div>
+<div class="container mx-auto">
+  <span class="-mx-10 text-sm">
+      {% for number in page_obj.paginator.page_range %}
+      <a href="?page={{ number }}">{{ number }}</a>
+      {% endfor %}
+  </span>
+</div>
+{% endblock %}

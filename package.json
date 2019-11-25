@@ -1,0 +1,23 @@
+{
+  "name": "python_airbnb_clone",
+  "version": "1.0.0",
+  "description": "Devide and Conquer !!!\r     Organize Apps Before to start coding with Django.\r     Rules for Making Apps :\r     ✔  'I need to' <APP FEATURE> <APP NAME>\r     ex) I need to create the user\r         I need to delete the user\r     ❌ <APP that already exits> can do <APP FEATURE>.\r     ex) <User App> can do 'send message'\r         -> <Message App> can send a message\r     ex) <Room App> can do 'create user'\r         -> <User App> can create a user",
+  "scripts": {
+    "css": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bundy-Mundi/python_airbnb.git"
+  },
+  "homepage": "https://github.com/Bundy-Mundi/python_airbnb#readme",
+  "dependencies": {
+    "autoprefixer": "^9.7.2",
+    "gulp": "^4.0.2",
+    "gulp-csso": "^3.0.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.0.2",
+    "node-sass": "^4.13.0",
+    "sass": "^1.23.3",
+    "tailwindcss": "^1.1.3"
+  }
+}

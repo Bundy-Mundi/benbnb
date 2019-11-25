@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.search-box {
+  transition: box-shadow 0.2s linear;
+}
+.nav_animation {
+  transition: border-bottom 0.2s ease-out;
+}
+.ani {
+  transition: background-color 0.2s ease;
+}
+.nav_link {
+  @apply ml-5 px-2 border-b-2 border-transparent h-full flex items-center;
+  a {
+    @apply py-10 px-6 flex items-center;
+  }
+}
+.btn-custom {
+  @apply px-12 py-4 font-thin rounded-sm text-center w-full;
+}
+#id_email {
+  @apply px-12 py-4 border border-gray-600 rounded-sm w-full bg-white mb-3 #{!important};
+}
+#id_password {
+  @apply px-12 py-4 border border-gray-600 rounded-sm w-full bg-white mb-3 #{!important};
+}
+#id_password1 {
+  @apply px-12 py-4 border border-gray-600 rounded-sm w-full bg-white mb-3 #{!important};
+}
+#id_first_name {
+  @apply px-12 py-4 border border-gray-600 rounded-sm w-full bg-white mb-3 #{!important};
+}
+#id_last_name {
+  @apply px-12 py-4 border border-gray-600 rounded-sm w-full bg-white mb-3 #{!important};
+}
+#error_messages {
+  @apply text-sm font-medium text-red-600 mb-3 items-start w-full;
+}

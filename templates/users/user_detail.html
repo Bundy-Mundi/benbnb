@@ -1,0 +1,16 @@
+{% extends "base.html" %} 
+{% load static %}
+
+{% block page_name %} {{user.first_name}} {%endblock page_name %} 
+
+{% block content %}
+<div class="p-4 w-full flex justify-center items-center">
+  <div class="rounded-sm border shadow-md flex flex-col items-center w-auto py-6 px-10">
+    {% include "mixins/profile.html" with user=user_obj %}
+    <span class="mb-8 font-light text-2xl">{{user_obj.first_name}}</span>
+    <span class="mb-3">{{user_obj.bio}}</span>
+    <span class="mb-3">{{user_obj.email}}</span>
+    <a href="#" class="px-6 py-1 btn bg-gray-600 rounded text-gray-300 hover:text-white all_ani hover:bg-gray-800 ">Edit Profile</a>
+  </div>
+</div>
+{% endblock %}

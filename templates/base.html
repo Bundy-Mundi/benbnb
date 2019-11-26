@@ -25,11 +25,11 @@
       {% include "partials/nav.html" %}
     </header>
     <main class="h-full px-4">
-      {% block content %}{% endblock %}
       {% include "messages.html" %}
+      {% block content %}{% endblock %}
     </main>
     <footer class="container mx-auto text-center py-10 px-10 mt-10 py-3 border-t border-gray-300 text-sm text-gray-400">
-      {% include "partials/footer.html" %}
+        {% include "partials/footer.html" %}
     </footer>
   </body>
 </html>

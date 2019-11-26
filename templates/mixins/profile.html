@@ -1,0 +1,11 @@
+{% load static %}
+
+{% if user.avatar %}
+<span class="rounded-full p-8 m-1 shadow-md mb-8">
+  <img class="w-32 h-32" src={{user.avatar.url}} alt="Sorry"/>
+</span>
+{% else %}
+<span class="rounded-full p-8 m-1 border mb-10">
+  <img class="w-32 h-32" src="{% static "img/anonymous_user.png" %}" alt="Sorry"/>
+</span>
+{% endif %}

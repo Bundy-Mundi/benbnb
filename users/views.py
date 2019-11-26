@@ -3,9 +3,10 @@ import requests
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import FormView
+from django.views.generic import FormView, DetailView
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.base import ContentFile
+from django.contrib import messages
 from . import forms, models
 
 
@@ -30,6 +31,7 @@ class LoginView(View):
 
             if user is not None:
                 login(request, user)
+                messages.success(request, f"Welcome back {user.first_name}")
                 return redirect(reverse("cores:home"))
 
         return render(request, "users/login.html", {"form": form})
@@ -38,6 +40,7 @@ class LoginView(View):
 def log_out(request):
 
     logout(request)
+    messages.info(request, f"See you later")
     return redirect(reverse("cores:home"))
 
 
@@ -98,7 +101,7 @@ def github_callback(request):
             )
             post_request_error = post_request.json().get("error", None)
             if post_request_error is not None:
-                raise GithubException
+                raise GithubException()
             access_token = post_request.json().get("access_token")
             get_request = requests.get(
                 "https://api.github.com/user",
@@ -113,14 +116,14 @@ def github_callback(request):
                 email = get_request.json().get("email")
                 bio = get_request.json().get("bio")
                 avatar_url = get_request.json().get("avatar_url")
-                user = models.User.objects.get(email=email)
                 try:
+                    user = models.User.objects.get(email=email)
                     if avatar_url is not None:
                         get_photo = requests.get(avatar_url)
                         content_photo = get_photo.content
                         user.avatar.save(f"{name}-avatar", ContentFile(content_photo))
                     if user.auth != models.User.AUTH_GITHUB:
-                        raise GithubException()
+                        raise GithubException(f"Try {user.auth} login method.")
                 except models.User.DoesNotExist:
                     # Not Using 'create_user' because in here, we're not taking care of passwords
                     user = models.User.objects.create(
@@ -138,16 +141,15 @@ def github_callback(request):
                     user.set_unusable_password()
                     user.save()
                 finally:
+                    messages.success(request, f"Welcome back {user.first_name}")
                     login(request, user)
                     return redirect(reverse("cores:home"))
             else:
-                print("Cannot get User info")
-                raise GithubException()
+                raise GithubException("Cannot get User info")
         else:
-            print("Empty Code")
-            raise GithubException()
-    except GithubException:
-        messages.error(request, "Something went wrong.")
+            raise GithubException("Can not get a code from Github. Please try again. ")
+    except GithubException as e:
+        messages.error(request, e)
         return redirect(reverse("users:login"))
 
 
@@ -203,8 +205,10 @@ def kakao_callback(request):
             user.set_unusable_password()
             user.save()
         login(request, user)  # We are gonna log the user in
+        messages.success(request, f"Welcome back {user.first_name}")
         return redirect(reverse("cores:home"))
     except Exception:
+
         """
         requests.post(
             "https://kapi.kakao.com/v1/user/unlink",
@@ -212,3 +216,14 @@ def kakao_callback(request):
         )
         """
         return redirect(reverse("users:login"))
+
+
+class UserProfileView(DetailView):
+    model = models.User
+    context_object_name = "user_obj"
+    # This(context_object_name) prevents replacing request.user and lets us stick with the current logged in user.
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["hello"] = "hello"
+        return context

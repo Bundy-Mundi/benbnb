@@ -4,6 +4,7 @@ import uuid
 from django.conf import settings
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
+from django.shortcuts import reverse
 from django.template.loader import render_to_string
 
 
@@ -52,6 +53,9 @@ class User(AbstractUser):
     email_verified = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=120, default="", blank=True)
     auth = models.CharField(max_length=40, choices=AUTH_CHOICES, default=AUTH_EMAIL)
+
+    def get_absolute_url(self):
+        return reverse("users:profile", kwargs={"pk": self.pk})
 
     def verify_email(self):
 

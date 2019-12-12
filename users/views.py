@@ -3,8 +3,9 @@ import requests
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import FormView, DetailView
+from django.views.generic import FormView, DetailView, UpdateView
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import PasswordChangeView
 from django.core.files.base import ContentFile
 from django.contrib import messages
 from . import forms, models
@@ -225,5 +226,75 @@ class UserProfileView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["rooms"] = self.object.rooms
         context["hello"] = "hello"
         return context
+
+
+class UpdateProfileView(UpdateView):
+
+    model = models.User
+    fields = (
+        "first_name",
+        "last_name",
+        "email",
+        "bio",
+        "gender",
+        "avatar",
+        "date_of_birth",
+        "language",
+        "currency",
+    )
+    template_name = "users/update_profile.html"
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        email = form.cleaned_data.get("email")
+        self.object.username = email
+        self.object.save()
+        return super().form_valid(form)
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        fields_list = [
+            "first_name",
+            "last_name",
+            "email",
+            "bio",
+            "gender",
+            "avatar",
+            "date_of_birth",
+            "language",
+            "currency",
+        ]
+
+        def set_placeholder(field_name, placeholder):
+            form.fields[field_name].widget.attrs = {"placeholder": placeholder}
+
+        for item in fields_list:
+            item_name = item.replace("_", " ")
+            item_name = item_name.capitalize()
+            set_placeholder(item, item_name)
+
+        return form
+
+
+class ChangePasswordView(PasswordChangeView):
+
+    models = models.User
+
+    def get_form(self, form_class=None):
+        """ Return an instance of the form to be used in this view. """
+        form = super().get_form(form_class=form_class)
+        if form_class is None:
+            form_class = self.get_form_class()
+
+        def set_placeholder(field_name, placeholder):
+            form.fields[field_name].widget.attrs = {"placeholder": placeholder}
+
+        set_placeholder("old_password", "Old Password")
+        set_placeholder("new_password1", "New Password")
+        set_placeholder("new_password2", "New Password Confirmation")
+        return form

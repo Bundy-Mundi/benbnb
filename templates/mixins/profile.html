@@ -1,11 +1,9 @@
 {% load static %}
 
 {% if user.avatar %}
-<span class="rounded-full p-8 m-1 shadow-md mb-8">
-  <img class="w-32 h-32" src={{user.avatar.url}} alt="Sorry"/>
-</span>
+  <img class="rounded-full m-1 shadow-md mb-8 w-24 h-24 object-fill lg:w-32 lg:h-32 xl:w-32 xl:h-32" src={{user.avatar.url}} alt="Can't find any image"/>
 {% else %}
-<span class="rounded-full p-8 m-1 border mb-10">
-  <img class="w-32 h-32" src="{% static "img/anonymous_user.png" %}" alt="Sorry"/>
-</span>
+  <span class="rounded-full p-8 m-1 border mb-10">
+    <img class="w-32 h-32" src="" alt="Sorry"/>
+  </span>
 {% endif %}

@@ -104,3 +104,29 @@
 #error_messages {
   @apply text-sm font-medium text-red-600 mb-3 items-start w-full;
 }
+#id_old_password {
+  @apply px-12 py-4 border border-gray-600 rounded-sm w-full bg-white mb-3 #{!important};
+}
+#id_new_password1 {
+  @apply px-12 py-4 border border-gray-600 rounded-sm w-full bg-white mb-3 #{!important};
+}
+#id_new_password2 {
+  @apply px-12 py-4 border border-gray-600 rounded-sm w-full bg-white mb-3 #{!important};
+}
+#id_avatar {
+  @apply px-12 py-4 border border-gray-600 rounded-sm w-full bg-white mb-3 #{!important};
+}
+#avatar-clear_id {
+  @apply px-12 py-4 border border-gray-600 rounded-sm w-full bg-white mb-3 #{!important};
+}
+#id_date_of_birth {
+  @apply px-12 py-4 border border-gray-600 rounded-sm w-full bg-white mb-3 #{!important};
+}
+textarea {
+  height: 130px;
+  resize: none;
+  @apply px-4 py-4 w-full border border-gray-600 rounded-sm bg-white mb-3;
+}
+select {
+  @apply px-1 py-1 w-full border border-gray-600 rounded-sm bg-white mb-3;
+}

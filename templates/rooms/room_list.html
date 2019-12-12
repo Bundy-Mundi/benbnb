@@ -24,9 +24,9 @@
 </div>
 <div class="container mx-auto">
   <span class="-mx-10 text-sm">
-      {% for number in page_obj.paginator.page_range %}
-      <a href="?page={{ number }}">{{ number }}</a>
-      {% endfor %}
+    {% for number in page_obj.paginator.page_range %}
+    <a href="?page={{ number }}">{{ number }}</a>
+    {% endfor %}
   </span>
 </div>
 {% endblock %}

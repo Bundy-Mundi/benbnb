@@ -23,6 +23,7 @@ class LoginForms(forms.Form):
         except models.User.DoesNotExist:
             self.add_error("email", forms.ValidationError("User doesn't exist"))
 
+
 class SignUpForms(forms.ModelForm):
     """ Sign Up Forms Definition """
     class Meta:

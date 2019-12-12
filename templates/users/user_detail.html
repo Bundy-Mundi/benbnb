@@ -4,13 +4,28 @@
 {% block page_name %} {{user.first_name}} {%endblock page_name %} 
 
 {% block content %}
-<div class="p-4 w-full flex justify-center items-center">
-  <div class="rounded-sm border shadow-md flex flex-col items-center w-auto py-6 px-10">
+<div class="p-4 w-full flex justify-center items-center mb-6">
+  <div class="w-2/5 rounded-sm border shadow-md flex flex-col items-center w-auto py-6 px-10">
     {% include "mixins/profile.html" with user=user_obj %}
-    <span class="mb-8 font-light text-2xl">{{user_obj.first_name}}</span>
+    <span class="mb-8 font-light text-3xl">{{user_obj.first_name}}</span>
     <span class="mb-3">{{user_obj.bio}}</span>
     <span class="mb-3">{{user_obj.email}}</span>
-    <a href="#" class="px-6 py-1 btn bg-gray-600 rounded text-gray-300 hover:text-white all_ani hover:bg-gray-800 ">Edit Profile</a>
+    {% if user == user_obj %}
+      <a href="{% url "users:update" %}" class="px-6 py-1 btn bg-gray-600 rounded text-gray-300 hover:text-white all_ani hover:bg-gray-800 ">Edit Profile</a>
+      <a href="{%  url "users:password" %}" class="text-teal-400 hover:text-teal-500 all_ani">Change Password</a>
+    {% endif %}
   </div>
+</div>
+<div class="flex flex-col items-center justify-center">
+  {% if user_obj.room.count > 0 %}
+  <div class="flex flex-wrap lg:w-11/12 md:w-4/5 sm:w-2/3">
+    {% if rooms %}
+    <span class="w-full text-center text-2xl font-light mb-6">{{user_obj.first_name}}'s Rooms</span>
+      {% for room in rooms.all %}
+        {% include "partials/room_card.html" with room=room %}
+      {% endfor %}
+    {% endif %}
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

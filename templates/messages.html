@@ -1,7 +1,7 @@
 {% if messages %}
 <ul class="justify-center flex items-center w-full messages">
   {% for message in messages %}
-  <li {% if message.tags %} class="absolute z-10 w-64 text-center py-3 px-4 message {{ message.tags }}" {% endif %}>{{ message }}</li>
+    <li {% if message.tags %} class="absolute z-10 w-64 text-center py-3 px-4 message {{ message.tags }}" {% endif %}>{{ message }}</li>
   {% endfor %}
 </ul>
 {% endif %}

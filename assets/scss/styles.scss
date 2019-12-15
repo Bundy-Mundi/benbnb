@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .shake {
-  animation: shakeit 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-  animation-delay: 1.8s;
+  animation: shakeit 0.89s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  animation-delay: 0.3s;
   transform: translate3d(0, 0, 0);
   perspective: 1000px;
 }
@@ -33,25 +33,32 @@
 }
 
 @keyframes shakeit {
-  10%,
-  90% {
+  0%,
+  80% {
     transform: translate3d(-1px, 0, 0);
+    opacity: 1;
+  }
+
+  10%,
+  70% {
+    transform: translate3d(2px, 0, 0);
+    opacity: 1;
   }
 
   20%,
-  80% {
-    transform: translate3d(2px, 0, 0);
+  40%,
+  60% {
+    transform: translate3d(-4px, 0, 0);
+    opacity: 1;
   }
 
   30%,
-  50%,
-  70% {
-    transform: translate3d(-4px, 0, 0);
-  }
-
-  40%,
-  60% {
+  50% {
     transform: translate3d(4px, 0, 0);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 .search-box {

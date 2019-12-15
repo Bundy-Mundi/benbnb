@@ -8,10 +8,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import PasswordChangeView
 from django.core.files.base import ContentFile
 from django.contrib import messages
-from . import forms, models
+from django.contrib.messages.views import SuccessMessageMixin
+from . import forms, models, mixins
 
 
-class LoginView(View):
+class LoginView(mixins.LoggedOutOnlyView, View):
     """ Login View Definition """
 
     def get(self, request):
@@ -45,7 +46,7 @@ def log_out(request):
     return redirect(reverse("cores:home"))
 
 
-class SignUpView(FormView):
+class SignUpView(mixins.LoggedOutOnlyView, FormView):
     """ Sign Up View Definition """
 
     template_name = "users/signup.html"
@@ -56,12 +57,13 @@ class SignUpView(FormView):
 
         form.save()  # If the form is valid, gonna save
         email = form.cleaned_data.get("email")
-        password = form.cleaned_data.get("password1")
+        password = form.cleaned_data.get("password")
         user = authenticate(self.request, username=email, password=password)
         if user is not None:
-            user.veify_email()
+            user.verify_email()
             login(self.request, user)
-        return super().form_valid(form)
+        else:
+            return super().form_valid(form)
 
 
 def complete_verification(request, key):
@@ -231,9 +233,10 @@ class UserProfileView(DetailView):
         return context
 
 
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
 
     model = models.User
+    success_message = "Profile Updated"
     fields = (
         "first_name",
         "last_name",
@@ -281,9 +284,12 @@ class UpdateProfileView(UpdateView):
         return form
 
 
-class ChangePasswordView(PasswordChangeView):
+class ChangePasswordView(
+    mixins.LoggedInOnlyView, SuccessMessageMixin, PasswordChangeView
+):
 
     models = models.User
+    success_message = "Password Changed Successfully"
 
     def get_form(self, form_class=None):
         """ Return an instance of the form to be used in this view. """
@@ -298,3 +304,6 @@ class ChangePasswordView(PasswordChangeView):
         set_placeholder("new_password1", "New Password")
         set_placeholder("new_password2", "New Password Confirmation")
         return form
+
+    def get_success_url(self):
+        return self.request.user.get_absolute_url()

@@ -23,7 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "n7zl)xu@t94t&=w1jfctz(i%5$2pnf*^a%+5x!!4l+4mi*ok%4"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+DEBUG = bool(os.environ.get("DEBUG"))
 
 ALLOWED_HOSTS = ["airbnb-clone.296cpyjc58.us-west-2.elasticbeanstalk.com"]
 
@@ -87,12 +88,25 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+if DEBUG:
+
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "HOST": os.environ.get("RDS_HOST"),
+            "NAME": os.environ.get("RDS_NAME"),
+            "PORT": os.environ.get("RDS_PORT"),
+            "PASSWORD": os.environ.get("RDS_PASSWORD"),
+            "USER": os.environ.get("RDS_USER"),
+        }
+    }
 
 
 # Password validation

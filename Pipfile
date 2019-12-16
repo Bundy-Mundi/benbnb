@@ -6,11 +6,11 @@ verify_ssl = true
 [dev-packages]
 pylint = "*"
 awsebcli = "*"
+black = "*"
 
 [packages]
 django = "==2.2.6"
 flake8 = "*"
-black = "*"
 pillow = "*"
 django-countries = "*"
 django-seed = "*"
@@ -21,3 +21,6 @@ pipenv-to-requirements = "*"
 
 [requires]
 python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true

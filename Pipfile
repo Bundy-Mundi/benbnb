@@ -5,7 +5,6 @@ verify_ssl = true
 
 [dev-packages]
 pylint = "*"
-awsebcli = "*"
 black = "*"
 
 [packages]
@@ -16,8 +15,8 @@ django-countries = "*"
 django-seed = "*"
 django-dotenv = "*"
 requests = "*"
-awscli = "*"
 pipenv-to-requirements = "*"
+web3 = "*"
 
 [requires]
 python_version = "3.8"
